@@ -1,0 +1,149 @@
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            
+            function shuffle(string) {
+                var parts = string.split('');
+                var punctuation="";
+                var firstChar=parts[0];
+                var lastChar=parts[parts.length-1];
+                var doShuffle=true;
+               
+                if (string.length<2) {
+                    doShuffle=false;
+                }
+               if (/[\:\;\.\,\?\!]/.test(lastChar)==true) {
+                    punctuation=lastChar;
+                    lastChar=parts[parts.length-2];
+                    
+                    parts.splice(parts.length-1,1);
+                    
+                    if (parts.length-2<2) {
+                        doShuffle=false;
+                    }
+                    console.log(parts.length);
+                   
+               }
+                
+                if (doShuffle!=false)
+                {
+                parts.splice(0,1);
+                parts.splice(parts.length-1,1);
+                 
+                for (var i = parts.length; i > 0;) {
+                    var random = parseInt(Math.random() * i);
+                    var temp = parts[--i];
+                    parts[i] = parts[random];
+                    parts[random] = temp;
+                }
+                parts= parts.join('');
+                parts=firstChar+parts+lastChar+punctuation;
+                }
+                else{
+                    
+                     parts= parts.join('');
+                     parts=parts+punctuation;
+                }
+                return parts;
+            }
+            
+            var textmash = function(){
+                this.fulltext="";
+                this.newtext="";
+            }
+            
+            textmash.prototype.copy=function(){
+                this.fulltext=$(".original").val();
+                this.mash();
+                $(".mashed").val(this.newtext);
+            }
+            
+            textmash.prototype.mash=function(){
+                var res=this.fulltext.split(" ");
+                $(res).each(function(id, word) {
+                    
+                    word=shuffle(word);
+                    
+                    res[id]=word;
+                    })
+                //console.log(res);
+                res=res.join(" ")
+                this.newtext=res;
+            }
+            
+            
+            $(document).ready(function() {
+                textmashs=new textmash();
+                
+                
+                $(".mashit").click(function() {
+                    textmashs.copy();
+                    })
+            });
+            
+        </script>
+        
+    <style>
+        
+        body {
+	margin:50px 0px; padding:0px;
+	text-align:center;
+        background-color: #f5cdd8;
+	}
+        
+        textarea{
+            width:40%;
+            height:230px;
+            background-color: #f8e9ee;
+            margin-top:10px;
+        }
+        .textAreaDiv{
+            width:500px;
+            margin:0px auto;
+            text-align:left;
+            padding:15px;
+            border:1px dashed #333;
+            background-color:#eee;
+        }
+        
+        .mashit{
+            background-color:#e4685d;
+            -moz-border-radius:18px;
+            -webkit-border-radius:18px;
+            border-radius:18px;
+            border:1px solid #ffffff;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:arial;
+            font-size:17px;
+            padding:5px 130px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #b23e35;
+        }
+        
+    </style>   
+        
+    </head>
+    <body>
+        
+        <div class="origDiv" id="textAreaDiv">
+<textarea class="original">
+If you can read this, you have a strange mind too. Can you read this? Only 55 people out of 100 can. 
+I could not believe that I could actually understand what I was reading. The phenomenal power of the human mind, according to a research at Cambridge University, it doesnt matter in what order the letters i a word are, the only important thing is that the first and last letter be in the right place. The rest can be a total mess and you can still read it without a problem. This is because the human mind does not read every letter by itself but the word as a whole. Amazing, huh? Yeah, and I always though spelling was important! IF you can read this, forward it!
+</textarea>
+        </Div>
+        
+        <div class="mashedDiv" id="textAreaDiv">
+<textarea class="mashed">
+If you can read this, you have a sanrgte mnid too. Can you raed this? Olny 55 polepe out of 100 can. 
+I culod not blvieee that I colud aulactly utndrnased what I was ridenag. The pnmhaoneel poewr of the hmaun mnid, andrcoicg to a rsacereh at Cdragmbie Uisntvirey, it dosnet mttaer in what oedrr the lreetts i a word are, the olny inmprtoat thnig is that the fsirt and last lteetr be in the rghit pacle. The rset can be a tatol mses and you can sltil read it wothiut a pbolerm. Tihs is bascuee the hamun mind deos not read eervy lteter by ietslf but the wrod as a whole. Amzanig, huh? Yeah, and I awlays tohugh siplelng was ionrmpatt! IF you can read tihs, frwaord i!t
+</textarea>
+        </div>
+        <div>
+            <input type="button" value="Sajaukt tekstu" class="mashit">
+        </div>
+    </body>
+</html>
